@@ -163,7 +163,6 @@ public class Vk {
        System.out.println("ответ от капчи     "+sb.toString());
        return sb.toString();
    }
-
     public static ArrayList<String> getTracks() throws IOException, InterruptedException {
         ArrayList<String> tracks = new ArrayList<String>();
 
@@ -185,19 +184,19 @@ public class Vk {
 
         return tracks;
     }
-    public static JSONArray getTracksJso() throws IOException, InterruptedException {
-        JSONArray tracks = new JSONArray();
-
+    public static JSONObject getTracksJso() throws IOException, InterruptedException {
+        JSONObject tracks = new JSONObject();
+        JSONArray tracklist = new JSONArray();
         String get = get("audio.get?offset=0");
         JSONArray jso = new JSONObject(get).getJSONObject("response").getJSONArray("items");
 
         for(int i=1;jso.length()!=0;i++){
             for(int j=0;j<jso.length();j++){
-                tracks.put(jso.getJSONObject(j).toString());
+                tracklist.put(jso.getJSONObject(j));
             }
             jso = new JSONObject(get("audio.get?offset="+  200*i)).getJSONObject("response").getJSONArray("items");
         }
-
+        tracks.append("tracklist",tracklist);
         return tracks;
     }
     public static ArrayList <String> getTracksWithId() throws IOException, InterruptedException {
@@ -222,7 +221,6 @@ public class Vk {
         //System.out.println(tracks.size());
         return tracks;
     }
-
     public static void main(String[] args) throws IOException, InterruptedException {
        Vk.token = "vk1.a.Qq1sA6hYepzU9Paq3X6cat8WasvhmQlm0V_lfZhv5ebqHo9XaBxNeybITU0raff_lgn5hoPOEdpt6sjJEWzQr-nyzB30f-V5INX11QueeEMV-UdU5UvIthaOrrcye7OoGiosklLuN8dOep37G-fCWw2Ff7XXtxBtRMCdxlsWA6E3mumvo0Nw6lPqJrGSDXwfZ6c1xNeu9QLjG5oLls5qXA";
 
